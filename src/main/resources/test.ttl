@@ -1,0 +1,3 @@
+@prefix : <http://expl.at#>.
+:Anna :hasHairColor :Red; :hasAge 20; :daughterOf :John.
+:Mary :daughterOf :John.

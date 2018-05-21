@@ -1,0 +1,115 @@
+@prefix : <http://example.org/> .
+@prefix v: <http:/vicusbass.ro/myvocabulary#>.
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix mo: <http://purl.org/ontology/mo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix schema: <http://schema.org/> .
+
+v:member a rdf:Property;
+         rdfs:domain schema:MusicGroup;
+         rdfs:comment "Represents a relationship between musicians and musical groups".
+v:isMemberOf a rdf:Property;
+			 rdfs:domain schema:MusicGroup;
+             rdfs:comment "Existing relationship between musicians and musical groups";
+			 rdfs:subPropertyOf v:member.
+v:wasMemberOf a rdf:Property;
+			  rdfs:domain schema:MusicGroup;
+              rdfs:comment "Previous relationship between musicians and musical groups";
+			  rdfs:subPropertyOf v:member.		
+v:ep a rdfs:Resource;
+	 rdfs:subClassOf schema:MusicAlbum;
+	 rdfs:comment "Extended play type of album".
+v:lp a rdfs:Resource;
+	 rdfs:subClassOf schema:MusicAlbum;
+	 rdfs:comment "Long play type of album".
+v:bootleg a rdfs:Resource;
+	      rdfs:subClassOf v:lp;
+	      rdfs:comment "LP album recorded live, more or less legally, definetely lower quality".
+	      
+v:electric_bass a rdfs:Resource;
+                rdfs:subClassOf dbr:Guitar;
+	            rdfs:comment "4-6 strings electric guitar using lower octaves".
+
+:Bands
+{
+	:Metallica foaf:name "Metallica";
+			   rdf:type schema:MusicGroup;
+			   dbo:genre :heavy_metal;
+			   foaf:member :JamesHetfield;
+			   foaf:member :LarsUrlich;
+			   foaf:member :KirkHammet;
+			   foaf:member :RobertTrujillo.
+	:DreamTheater foaf:name "Dream Theater";
+				  rdf:type schema:MusicGroup;
+			      dbo:genre :prog_metal;
+			      foaf:member :JamesLaBrie;
+			   	  foaf:member :JohnPetrucci;
+			   	  foaf:member :JohnMyung;
+				  foaf:member :MikeMangini;
+			   	  foaf:member :JordanRudess.
+}
+:Artists
+{
+	:LarsUrlich a mo:MusicArtist;
+    			   foaf:name "Lars Urlich";
+    			   v:isMemberOf :Metallica;
+    			   dbo:instrument dbr:Drum_kit.			   
+    :RobertTrujillo a mo:MusicArtist;
+    			    foaf:name "Robert Trujillo";
+    			    v:isMemberOf :Metallica;
+    			    dbo:instrument v:electric_bass.
+    :KirkHammet a mo:MusicArtist;
+    			  foaf:name "Kirk Hammet";
+    			  v:isMemberOf :Metallica;
+    			  dbo:instrument dbr:Guitars.
+    :JamesHetfield  a mo:MusicArtist;
+    				a mo:singer;
+    			    foaf:name "James Hetfield";
+    			    v:isMemberOf :Metallica;
+    			    dbo:instrument dbr:Guitars.
+    			    
+    :MikeMangini a mo:MusicArtist;
+    			   foaf:name "Mike Mangini";
+    			   v:isMemberOf :DreamTheater;
+    			   dbo:instrument dbr:Drum_kit.
+    :JohnMyung a mo:MusicArtist;
+    			    foaf:name "John Myung";
+    			    v:isMemberOf :DreamTheater;
+    			    dbo:instrument v:electric_bass.
+    :JohnPetrucci a mo:MusicArtist;
+    			  foaf:name "John Petrucci";
+    			  v:isMemberOf :DreamTheater;
+    			  dbo:instrument dbr:Guitars.
+    :JordanRudess a mo:MusicArtist;
+    			  foaf:name "Jordan Rudess";
+    			  v:isMemberOf :DreamTheater;
+    			  dbo:instrument dbr:Keyboards.
+    :JamesLaBrie a mo:MusicArtist;
+    			  foaf:name "James LaBrie";
+    			  v:isMemberOf :DreamTheater;
+    			  dbo:instrument dbr:Singing.
+    :MikePortnoy a mo:MusicArtist;
+    			   foaf:name "Mike Portnoy";
+    			   v:wasMemberOf :DreamTheater;
+    			   dbo:instrument dbr:Drum_kit.
+}
+
+:Genres
+{
+	 :rock a mo:Genre;
+	 		 dc:title "Rock";
+	 		 rdfs:comment "The genre that changed everything."^^xsd:string.
+	 :heavy_metal a mo:Genre;
+	 			  dc:title "Heavy Metal";
+	 			  rdfs:comment "Genre suited for real men."^^xsd:string;
+	 			  rdfs:subClassOf    :rock .
+	 :prog_metal a mo:Genre;
+	 			 dc:title "Prog Metal";
+	 			 rdfs:comment "Genre suited for musicians and brilliant geeks."^^xsd:string;
+	 			 rdfs:subClassOf    :rock .
+}
